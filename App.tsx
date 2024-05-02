@@ -16,6 +16,8 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import proximity from 'rn-proximity-sensor';
+import type { SubscriptionRef } from 'rn-proximity-sensor';
 
 import {
   Colors,
@@ -56,11 +58,26 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 }
 
 function App(): React.JSX.Element {
+  const [isProximityEnabled, setProximityEnabled] = React.useState<boolean>(false);
+  const sensorSubscriptionRef = React.useRef<SubscriptionRef | null>(null);
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  React.useEffect(() => {
+    sensorSubscriptionRef.current = proximity.subscribe((values) => {
+      if (values.is_double_toggle) setProximityEnabled((prev) => !prev);
+    });
+
+    return () => {
+      if (sensorSubscriptionRef.current) {
+        sensorSubscriptionRef.current.unsubscribe();
+        sensorSubscriptionRef.current = null;
+      }
+    };
+  }, []);
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -76,20 +93,7 @@ function App(): React.JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          <Text>Open up App.tsx to start working on your app! {isProximityEnabled}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
