@@ -8,8 +8,6 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import proximity from 'rn-proximity-sensor';
-import type { SubscriptionRef } from 'rn-proximity-sensor';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
