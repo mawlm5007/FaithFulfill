@@ -56,12 +56,12 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
   return (
         <View style={styles.container} onTouchStart={() => {
             if (rakatCount === rakat) {
-                navigation.navigate('Home');
+                navigation.navigate('FaithFulfill');
             }
         }}>
           {!inPrayer && rakatCount < rakat && <Text style = {styles.text}>{rakat} Rakats</Text>}
           {!inPrayer && rakatCount < rakat &&  <Button title="Start Prayer" onPress={() => setInPrayer(!inPrayer)}></Button>}
-          {!inPrayer && rakatCount < rakat &&  <Button title="Return Home" onPress={() => navigation.navigate('Home')}></Button>}
+          {!inPrayer && rakatCount < rakat &&  <Button title="Return Home" onPress={() => navigation.navigate('FaithFulfill')}></Button>}
           {(inPrayer || rakatCount === rakat) && <Text style = {styles.text}>Rakat's completed: {rakatCount}</Text>}
         </View>
   );
@@ -73,11 +73,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,10)',
     },
     text: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: 'black',
+        color: '#e3c500', // hex value for a darker shade of yellow
         marginBottom: 16,
     },
 });

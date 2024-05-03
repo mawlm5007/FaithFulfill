@@ -30,8 +30,13 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Navigator initialRouteName="FaithFulfill" screenOptions={{
+        headerStyle: {
+          backgroundColor: '#ffd700', // Yellow
+        },
+        headerTintColor: '#000000', // Black
+      }}>
+        <Stack.Screen name="FaithFulfill" component={HomeScreen} />
         <Stack.Screen name="Pray" component={PrayScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
