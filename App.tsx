@@ -10,66 +10,33 @@ import {
 } from 'react-native';
 import proximity from 'rn-proximity-sensor';
 import type { SubscriptionRef } from 'rn-proximity-sensor';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import {
   Colors,
   Header,
 } from 'react-native/Libraries/NewAppScreen';
+import HomeScreen from './screens/HomeScreen';
+import { PrayScreen } from './screens/PrayerScreen';
+
+const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
-  const [isProximityEnabled, setProximityEnabled] = React.useState<boolean>(false);
-  const [proximityCount, setProximityCount] = React.useState<number>(0);
-
-  const sensorSubscriptionRef = React.useRef<SubscriptionRef | null>(null);
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  React.useEffect(() => {
-    sensorSubscriptionRef.current = proximity.subscribe((values) => {
-      if (values.is_double_toggle) {
-        setProximityEnabled(true);
-        setProximityCount((prevCount) => {
-          const updatedCount = prevCount + 1;
-          if (updatedCount % 2 === 0 && updatedCount !== 0) {
-            console.log('One rakaat done!'); 
-            return 0;
-          }
-          return updatedCount;
-        });
-      } else {
-        setProximityEnabled(false);
-      }
-    }); 
-
-    return () => {
-      if (sensorSubscriptionRef.current) {
-        sensorSubscriptionRef.current.unsubscribe();
-        sensorSubscriptionRef.current = null;
-      }
-    };
-  }, []);
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Text>Open up App.tsx to start working on your app! isProximityEnabled: { isProximityEnabled ? 'on' : 'off'} proximityCount: {proximityCount}</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Pray" component={PrayScreen} options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
