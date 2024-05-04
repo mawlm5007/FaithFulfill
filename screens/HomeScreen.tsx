@@ -4,6 +4,7 @@ import {
   Text,
   View,
   Button,
+  Image,
   Pressable,
 } from 'react-native';
 
@@ -33,6 +34,10 @@ export default function HomeScreen({ navigation }: { navigation: any }): React.J
 
     return (
         <View style={styles.container}>
+            <Image
+                source={require('../images/bismillah.png')}
+                style={{width: 150, height: 150, resizeMode: 'contain', marginBottom: 50}}
+            />
             <Text style={styles.text}>Select Rak'at</Text>
             <Pressable
                 style={[
@@ -109,7 +114,7 @@ const styles = StyleSheet.create({
         borderColor: 'white',
     },
     buttonText: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         color: 'rgba(28,28,30,1)', // hex value for a darker shade of yellow
         textAlign: 'center',

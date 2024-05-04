@@ -88,10 +88,12 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
           {!inPrayer && rakatCount < rakat &&  <Button title="Return Home" onPress={() => navigation.navigate('FaithFulfill')}></Button>}
           {rakatCount !== rakat && rakat === 1 && inPrayer && <Text style={styles.text}>Complete Two Sujud Over the Phone</Text>}
           {rakat === 1 && (inPrayer || rakatCount === rakat) && <Text style = {styles.text}>Rakat's completed: {rakatCount}</Text>}
-          {(inPrayer || rakatCount === rakat) && rakat >= 2 && <View style={[styles.circle, {backgroundColor: rakatCount < 1 ? 'grey' : 'green'}]}></View>}
-          {(inPrayer || rakatCount === rakat) && rakat >= 2 && <View style={[styles.circle, {backgroundColor: rakatCount < 2 ? 'grey' : 'green'}]}></View>}
-          {(inPrayer || rakatCount === rakat) && rakat >= 3 && <View style={[styles.circle, {backgroundColor: rakatCount < 3 ? 'grey' : 'green'}]}></View>}
-          {(inPrayer || rakatCount === rakat) && rakat >= 4 && <View style={[styles.circle, {backgroundColor: rakatCount < 4 ? 'grey' : 'green'}]}></View>}
+          <View style = {styles.circleContainer}>
+            {(inPrayer || rakatCount === rakat) && rakat >= 2 && <View style={[styles.circle, {backgroundColor: rakatCount < 1 ? 'grey' : 'green'}]}></View>}
+            {(inPrayer || rakatCount === rakat) && rakat >= 2 && <View style={[styles.circle, {backgroundColor: rakatCount < 2 ? 'grey' : 'green'}]}></View>}
+            {(inPrayer || rakatCount === rakat) && rakat >= 3 && <View style={[styles.circle, {backgroundColor: rakatCount < 3 ? 'grey' : 'green'}]}></View>}
+            {(inPrayer || rakatCount === rakat) && rakat >= 4 && <View style={[styles.circle, {backgroundColor: rakatCount < 4 ? 'grey' : 'green'}]}></View>}
+          </View>
           {rakat === 1 && (inPrayer || rakatCount === rakat) && <View style={[styles.circle, {backgroundColor: rakatCount < 1 ? 'grey' : 'green'}]}></View>}
         </View>
   );
@@ -111,6 +113,16 @@ const styles = StyleSheet.create({
       color: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
       marginBottom: 16,
       flexWrap: 'wrap',
+      marginHorizontal: 50,
+      textAlign: 'center'
+  },
+  circleContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 16,
+      flexWrap: 'wrap',
+      gap: 30,
       marginHorizontal: 50,
       textAlign: 'center'
   },
