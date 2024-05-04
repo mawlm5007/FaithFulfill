@@ -32,7 +32,7 @@ function App(): React.JSX.Element {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Stack.Navigator initialRouteName="FaithFulfill" screenOptions={{
         headerStyle: {
-          backgroundColor: '#ffd700', // Yellow
+          backgroundColor: 'rgba(255, 204, 0, 1)', // Yellow
         },
         headerTintColor: '#000000', // Black
       }}>
