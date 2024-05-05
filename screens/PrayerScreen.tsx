@@ -5,6 +5,7 @@ import {
   View,
   Button,
   Pressable,
+  Animated,
 } from 'react-native';
 import proximity from 'rn-proximity-sensor';
 import type { SubscriptionRef } from 'rn-proximity-sensor';
@@ -16,6 +17,7 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
   const [rakatCount, setRakatCount] = React.useState<number>(0);
   const rakat = route.params?.rakat || 2;
   const [startButtonPressed, setStartButtonPressed] = React.useState<boolean>(false);
+  const [homeButtonPressed, setHomeButtonPressed] = React.useState<boolean>(false);
 
   const handlePressIn = () => {
     setStartButtonPressed(true);
@@ -25,7 +27,31 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
     setStartButtonPressed(false);
   };
 
+  const homePressIn = () => {
+    setHomeButtonPressed(true);
+  }
+
+  const homePressOut = () => {
+    setHomeButtonPressed(false);
+  }
+
   const sensorSubscriptionRef = React.useRef<SubscriptionRef | null>(null);
+  const circleSize = React.useRef(new Animated.Value(100)).current;
+  const [finishedPrayer, setFinishedPrayer] = React.useState<boolean>(false);
+
+  const growCircles = () => {
+    if (rakatCount === rakat) {
+      setFinishedPrayer(true);
+      Animated.sequence([
+        Animated.timing(circleSize, {
+          toValue: 1000,
+          duration: 2000,
+          useNativeDriver: false,
+        }
+        )
+      ]).start(() => navigation.navigate('FaithFulfill'));
+    }
+  }
 
   React.useEffect(() => {
     if (!inPrayer) return;
@@ -63,15 +89,19 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
   }, [inPrayer]);
 
   return (
-        <View style={styles.container} onTouchStart={() => {
+        <Animated.View style={styles.container} onTouchStart={() => {
             if (rakatCount === rakat) {
-                navigation.navigate('FaithFulfill');
+              setFinishedPrayer(true);
+              // add animation here: all circles grow to fill the whole screen 
+              growCircles();
+              // navigate to next page
+              //navigation.navigate('FaithFulfill');
             }
         }}>
           {rakatCount !== rakat && !inPrayer && rakat === 1 && <Text style = {styles.text}>Place the phone on the Prayer Mat </Text>}
           {rakatCount !== rakat && !inPrayer && rakat === 1 && <Text style = {styles.text}>Tap the button to start! </Text>}
-          {rakat === 1 && rakatCount === rakat && <Text style = {styles.text}>You have completed a Rak'a!</Text>}
-          {rakat === 1 && rakatCount === rakat && <Text style = {styles.text}>Tap Anywhere to Return Home</Text>}
+          {!finishedPrayer && rakat === 1 && rakatCount === rakat && <Text style = {styles.text}>You have completed a Rak'a!</Text>}
+          {!finishedPrayer && rakat === 1 && rakatCount === rakat && <Text style = {styles.text}>Tap Anywhere to Return Home</Text>}
           {rakat !== 1 && !inPrayer && rakatCount < rakat && <Text style = {styles.text}>{rakat} Rakats</Text>}
           {!inPrayer && rakatCount < rakat &&  
             <Pressable 
@@ -85,20 +115,30 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
             > 
               <Text style={styles.buttonText}>Start Prayer</Text>
             </Pressable>}
-          {!inPrayer && rakatCount < rakat &&  <Button title="Return Home" onPress={() => navigation.navigate('FaithFulfill')}></Button>}
+          {!inPrayer && rakatCount < rakat &&  
+            <Pressable 
+              style={[
+                styles.returnHomeButton,
+                homeButtonPressed && styles.pressedButton,
+              ]}
+              onPress={() => navigation.navigate('FaithFulfill')}
+              onPressIn={homePressIn}
+              onPressOut={homePressOut}
+            >
+              <Text style={styles.returnHomeButtonText}>Return Home</Text>
+            </Pressable>}
           {rakatCount !== rakat && rakat === 1 && inPrayer && <Text style={styles.text}>Complete Two Sujud Over the Phone</Text>}
-          {rakat === 1 && (inPrayer || rakatCount === rakat) && <Text style = {styles.text}>Rakat's completed: {rakatCount}</Text>}
-          <View style = {styles.circleContainer}>
-            {(inPrayer || rakatCount === rakat) && rakat >= 2 && <View style={[styles.circle, {backgroundColor: rakatCount < 1 ? 'grey' : 'green'}]}></View>}
-            {(inPrayer || rakatCount === rakat) && rakat >= 2 && <View style={[styles.circle, {backgroundColor: rakatCount < 2 ? 'grey' : 'green'}]}></View>}
-            {(inPrayer || rakatCount === rakat) && rakat >= 3 && <View style={[styles.circle, {backgroundColor: rakatCount < 3 ? 'grey' : 'green'}]}></View>}
-            {(inPrayer || rakatCount === rakat) && rakat >= 4 && <View style={[styles.circle, {backgroundColor: rakatCount < 4 ? 'grey' : 'green'}]}></View>}
+          {!finishedPrayer && rakat === 1 && (inPrayer || rakatCount === rakat) && <Text style = {styles.text}>Rakat's completed: {rakatCount}</Text>}
+          <View style = {[styles.circleContainer, {gap: finishedPrayer ? 0 : 30}]}>
+            {(inPrayer || rakatCount === rakat) && rakat >= 1 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 1 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}
+            {(inPrayer || rakatCount === rakat) && rakat >= 2 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 2 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}
+            {(inPrayer || rakatCount === rakat) && rakat >= 3 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 3 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}
+            {(inPrayer || rakatCount === rakat) && rakat >= 4 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 4 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}
           </View>
           {rakat === 1 && (inPrayer || rakatCount === rakat) && <View style={[styles.circle, {backgroundColor: rakatCount < 1 ? 'grey' : 'green'}]}></View>}
-        </View>
+        </Animated.View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -112,7 +152,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       color: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
       marginBottom: 16,
-      flexWrap: 'wrap',
+      flexWrap: 'wrap', 
       marginHorizontal: 50,
       textAlign: 'center'
   },
@@ -127,8 +167,8 @@ const styles = StyleSheet.create({
       textAlign: 'center'
   },
   circle: {
-      width: 100,
-      height: 100,
+      // width: 100,
+      // height: 100,
       borderRadius: 50,
   },
   button: {
@@ -149,5 +189,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'rgba(28,28,30,1)', // hex value for a darker shade of yellow
     textAlign: 'center',
-},
+  },
+  returnHomeButtonText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'rgba(28,28,30,1)', // hex value for a darker shade of yellow
+    textAlign: 'center',
+  },
+  returnHomeButton: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
+    marginBottom: 10,
+    width: 150,
+  },
 });
