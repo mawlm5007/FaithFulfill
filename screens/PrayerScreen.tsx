@@ -129,7 +129,7 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
             </Pressable>}
           {rakatCount !== rakat && rakat === 1 && inPrayer && <Text style={styles.text}>Complete Two Sujud Over the Phone</Text>}
           {!finishedPrayer && rakat === 1 && (inPrayer || rakatCount === rakat) && <Text style = {styles.text}>Rakat's completed: {rakatCount}</Text>}
-          <View style = {[styles.circleContainer, {gap: finishedPrayer ? 0 : 30}]}>
+          <View style = {[styles.circleContainer]}>
             {(inPrayer || rakatCount === rakat) && rakat >= 1 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 1 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}
             {(inPrayer || rakatCount === rakat) && rakat >= 2 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 2 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}
             {(inPrayer || rakatCount === rakat) && rakat >= 3 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 3 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}
