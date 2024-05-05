@@ -39,13 +39,13 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
   const circleSize = React.useRef(new Animated.Value(100)).current;
   const [finishedPrayer, setFinishedPrayer] = React.useState<boolean>(false);
 
-  const growCircles = () => {
+  const shrinkCircles = () => {
     if (rakatCount === rakat) {
       setFinishedPrayer(true);
       Animated.sequence([
         Animated.timing(circleSize, {
-          toValue: 1000,
-          duration: 2000,
+          toValue: 0,
+          duration: 2500,
           useNativeDriver: false,
         }
         )
@@ -91,13 +91,13 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
   return (
         <Animated.View style={styles.container} onTouchStart={() => {
             if (rakatCount === rakat) {
-              setFinishedPrayer(true);
               // add animation here: all circles grow to fill the whole screen 
-              growCircles();
+              shrinkCircles();
               // navigate to next page
               //navigation.navigate('FaithFulfill');
             }
         }}>
+          {finishedPrayer && <Text style = {styles.completeText}> Prayer Completed! </Text>}
           {rakatCount !== rakat && !inPrayer && rakat === 1 && <Text style = {styles.text}>Place the phone on the Prayer Mat </Text>}
           {rakatCount !== rakat && !inPrayer && rakat === 1 && <Text style = {styles.text}>Tap the button to start! </Text>}
           {!finishedPrayer && rakat === 1 && rakatCount === rakat && <Text style = {styles.text}>You have completed a Rak'a!</Text>}
@@ -204,5 +204,11 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
     marginBottom: 10,
     width: 150,
+  },
+  completeText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'green', // hex value for a darker shade of yellow
+    textAlign: 'center',
   },
 });
