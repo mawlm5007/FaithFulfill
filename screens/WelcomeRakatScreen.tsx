@@ -7,22 +7,31 @@ import {
   Image,
   Pressable,
 } from 'react-native';
+import FastImage from 'react-native-fast-image'
 
 export default function WelcomeRakatScreen({ navigation }: { navigation: any }): React.JSX.Element {
-    const welcomeDone1 = () => {console.log('welcome done')};
+    const [nextButtonPressed, setNextButtonPressed] = React.useState<boolean>(false);
     return (
         <View style={styles.container}>
-            <Image
+            <FastImage
                 source={require('../images/bismillah.png')}
-                style={{width: 150, height: 150, resizeMode: 'contain', marginBottom: 50}}
+                style={{width: 150, height: 150, marginBottom: 50}}
+                resizeMode={FastImage.resizeMode.contain}
             />
             <Text style={styles.text}>RAKAAT TRACKER</Text>
-            <Button
-                title="Next"
-                color="white"
-                onPress={() => {navigation.navigate('WelcomeCalendar');}}
-            >
-            </Button>
+            <View style={styles.buttonContainer}>
+                <Pressable
+                    style={[
+                        styles.button,
+                        nextButtonPressed && styles.pressedButton,
+                    ]}
+                    onPress={() => navigation.navigate('WelcomeCalendar')}
+                    onPressIn={() => setNextButtonPressed(true)}
+                    onPressOut={() => setNextButtonPressed(false)}
+                >
+                    <Text style={styles.buttonText}>Next</Text>
+                </Pressable>
+            </View>
         </View>
     );
 }
@@ -47,7 +56,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
         marginBottom: 10,
-        width: 300,
+        width: 100,
     },
     pressedButton: {
         backgroundColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
@@ -59,4 +68,14 @@ const styles = StyleSheet.create({
         color: 'rgba(28,28,30,1)', // hex value for a darker shade of yellow
         textAlign: 'center',
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 16,
+        flexWrap: 'wrap',
+        gap: 30,
+        marginHorizontal: 50,
+        textAlign: 'center'
+    }
 });

@@ -7,22 +7,45 @@ import {
   Image,
   Pressable,
 } from 'react-native';
+import FastImage from 'react-native-fast-image'
 
 export default function WelcomeCalendarScreen({ navigation }: { navigation: any }): React.JSX.Element {
+    const [backButtonPressed, setBackButtonPressed] = React.useState<boolean>(false);
+    const [nextButtonPressed, setNextButtonPressed] = React.useState<boolean>(false);
 
     return (
         <View style={styles.container}>
-            <Image
-                source={require('../images/bismillah.png')}
-                style={{width: 150, height: 150, resizeMode: 'contain', marginBottom: 50}}
+            <Text style={styles.comingSoonText}>COMING SOON</Text>
+            <FastImage
+                source={require('../images/calendar.png')}
+                style={{width: 150, height: 150, marginBottom: 50}}
+                resizeMode={FastImage.resizeMode.contain}
             />
-            <Text style={styles.text}>CALENDAR</Text>
-            <Button
-                title="Next"
-                color="white"
-                onPress={() => navigation.navigate('FaithFulfill')}
-            >
-            </Button>
+            <Text style={styles.text}>CALENDAR PRAYER TRACKING</Text>
+            <View style={styles.buttonContainer}>
+                <Pressable
+                    style={[
+                        styles.button,
+                        backButtonPressed && styles.pressedButton,
+                    ]}
+                    onPress={() => navigation.navigate('WelcomeRakaat')}
+                    onPressIn={() => setBackButtonPressed(true)}
+                    onPressOut={() => setBackButtonPressed(false)}
+                >
+                    <Text style={styles.buttonText}>Back</Text>
+                </Pressable>
+                <Pressable
+                    style={[
+                        styles.button,
+                        nextButtonPressed && styles.pressedButton,
+                    ]}
+                    onPress={() => navigation.navigate('FaithFulfill')}
+                    onPressIn={() => setNextButtonPressed(true)}
+                    onPressOut={() => setNextButtonPressed(false)}
+                >
+                    <Text style={styles.buttonText}>Next</Text>
+                </Pressable>
+            </View>
         </View>
     );
 }
@@ -33,6 +56,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(28,28,30,1)',
+    },
+    comingSoonText: {
+        fontSize: 45,
+        fontWeight: 'bold',
+        color: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
+        marginBottom: 16,
     },
     text: {
         fontSize: 24,
@@ -47,7 +76,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
         marginBottom: 10,
-        width: 300,
+        width: 100,
     },
     pressedButton: {
         backgroundColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
@@ -59,4 +88,14 @@ const styles = StyleSheet.create({
         color: 'rgba(28,28,30,1)', // hex value for a darker shade of yellow
         textAlign: 'center',
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 16,
+        flexWrap: 'wrap',
+        gap: 30,
+        marginHorizontal: 50,
+        textAlign: 'center'
+    }
 });
