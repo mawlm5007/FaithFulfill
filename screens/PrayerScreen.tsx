@@ -6,6 +6,7 @@ import {
   Button,
   Pressable,
   Animated,
+  Image,
 } from 'react-native';
 import proximity from 'rn-proximity-sensor';
 import type { SubscriptionRef } from 'rn-proximity-sensor';
@@ -128,6 +129,10 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
               <Text style={styles.returnHomeButtonText}>Return Home</Text>
             </Pressable>}
           {rakatCount !== rakat && rakat === 1 && inPrayer && <Text style={styles.text}>Complete Two Sujud Over the Phone</Text>}
+          {rakatCount !== rakat && rakat === 1 && inPrayer && <Image
+                source={require('../images/prayerTryOut.png')}
+                style={{width: 300, height: 300, resizeMode: 'contain', marginBottom: 0}}
+            />}
           {!finishedPrayer && rakat === 1 && (inPrayer || rakatCount === rakat) && <Text style = {styles.text}>Rakat's completed: {rakatCount}</Text>}
           <View style = {[styles.circleContainer]}>
             {(inPrayer || rakatCount === rakat) && rakat >= 1 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 1 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}
