@@ -6,9 +6,11 @@ import {
   Button,
   Pressable,
   Animated,
+  Image,
 } from 'react-native';
 import proximity from 'rn-proximity-sensor';
 import type { SubscriptionRef } from 'rn-proximity-sensor';
+import FastImage from 'react-native-fast-image'
 
 export function PrayScreen({ navigation, route }: { navigation: any, route: any }): React.JSX.Element {
   const [isProximityEnabled, setProximityEnabled] = React.useState<boolean>(false);
@@ -128,7 +130,22 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
               <Text style={styles.returnHomeButtonText}>Return Home</Text>
             </Pressable>}
           {rakatCount !== rakat && rakat === 1 && inPrayer && <Text style={styles.text}>Complete Two Sujud Over the Phone</Text>}
-          {!finishedPrayer && rakat === 1 && (inPrayer || rakatCount === rakat) && <Text style = {styles.text}>Rakat's completed: {rakatCount}</Text>}
+          {rakatCount !== rakat && rakat === 1 && inPrayer && 
+            <FastImage
+            source={require('../images/prayerTryOut.png')}
+            style={{
+              width: 350,
+              height: 350,
+              marginBottom: 0,
+              borderTopLeftRadius: 175, // Adjust the radius value for desired roundness
+              borderTopRightRadius: 175,
+              borderBottomLeftRadius: 175,
+              borderBottomRightRadius: 175
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+            />
+          }
+          {/* {!finishedPrayer && rakat === 1 && (inPrayer || rakatCount === rakat) && <Text style = {styles.text}>Rakat's completed: {rakatCount}</Text>} */}
           <View style = {[styles.circleContainer]}>
             {(inPrayer || rakatCount === rakat) && rakat >= 1 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 1 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}
             {(inPrayer || rakatCount === rakat) && rakat >= 2 && <Animated.View style={[styles.circle, {backgroundColor: rakatCount < 2 ? 'grey' : 'green'}, {width: circleSize}, {height: circleSize}]}></Animated.View>}

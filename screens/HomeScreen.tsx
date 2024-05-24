@@ -7,6 +7,7 @@ import {
   Image,
   Pressable,
 } from 'react-native';
+import FastImage from 'react-native-fast-image'
 
 export default function HomeScreen({ navigation }: { navigation: any }): React.JSX.Element {
     const [pressedButtonOne, setPressedButtonOne] = React.useState<boolean>(false);
@@ -34,9 +35,10 @@ export default function HomeScreen({ navigation }: { navigation: any }): React.J
 
     return (
         <View style={styles.container}>
-            <Image
+            <FastImage
                 source={require('../images/bismillah.png')}
-                style={{width: 150, height: 150, resizeMode: 'contain', marginBottom: 50}}
+                style={{width: 150, height: 150, marginBottom: 50}}
+                resizeMode={FastImage.resizeMode.contain}
             />
             <Text style={styles.text}>Select Rak'at</Text>
             <Pressable
