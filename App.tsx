@@ -21,6 +21,7 @@ function App(): React.JSX.Element {
   const [isFirstTime, setIsFirstTime] = React.useState<boolean>(false);
 
   React.useEffect(() => {
+    console.log(isFirstTime);
     console.log('HELLO');
     const getData = async () => {
       console.log('Inside getData');
@@ -32,6 +33,7 @@ function App(): React.JSX.Element {
         console.log('isFirstTime: ', isFirstTime);
       } else {
         await storeData(FIRST_TIME, "false");
+        setIsFirstTime(false);
       }
     };
 
@@ -42,25 +44,19 @@ function App(): React.JSX.Element {
     <NavigationContainer>
       {isFirstTime && <Stack.Navigator initialRouteName='FaithFulfill' screenOptions={{
         headerStyle: {
-          backgroundColor: 'black', // Yellow
+          backgroundColor: 'black',
         },
-        headerTintColor: '#000000', // Black
+        headerTintColor: '#000000',
       }}>
-        {/* <Stack.Screen name="WelcomeRakaat" options={{ headerShown: false }}>
-          {({ navigation }) => <WelcomeRakatScreen navigation={navigation} />}
-        </Stack.Screen> */}
         <Stack.Screen name="FaithFulfill" component={HomeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Pray" component={PrayScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>}
       {!isFirstTime && <Stack.Navigator initialRouteName='WelcomeRakaat' screenOptions={{
         headerStyle: {
-          backgroundColor: 'black', // Yellow
+          backgroundColor: 'black',
         },
-        headerTintColor: '#000000', // Black
+        headerTintColor: '#000000',
       }}>
-        {/* <Stack.Screen name="WelcomeRakaat" options={{ headerShown: false }}>
-          {({ navigation }) => <WelcomeRakatScreen navigation={navigation} />}
-        </Stack.Screen> */}
         <Stack.Screen name="WelcomeRakaat" component={WelcomeRakatScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="WelcomeCalendar" component={WelcomeCalendarScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="FaithFulfill" component={HomeScreen} options={{ headerShown: false }}/>

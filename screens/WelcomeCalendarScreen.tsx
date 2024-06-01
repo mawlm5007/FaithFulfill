@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image'
 
+import { CommonActions } from '@react-navigation/native';
+
 export default function WelcomeCalendarScreen({ navigation }: { navigation: any }): React.JSX.Element {
     const [backButtonPressed, setBackButtonPressed] = React.useState<boolean>(false);
     const [nextButtonPressed, setNextButtonPressed] = React.useState<boolean>(false);
@@ -39,7 +41,14 @@ export default function WelcomeCalendarScreen({ navigation }: { navigation: any 
                         styles.button,
                         nextButtonPressed && styles.pressedButton,
                     ]}
-                    onPress={() => navigation.navigate('FaithFulfill')}
+                    onPress={() => navigation.dispatch(
+                        CommonActions.reset({
+                          index: 1,
+                          routes: [
+                            { name: 'Pray', params: { rakat: 1 } },
+                          ],
+                        })
+                      )}
                     onPressIn={() => setNextButtonPressed(true)}
                     onPressOut={() => setNextButtonPressed(false)}
                 >
