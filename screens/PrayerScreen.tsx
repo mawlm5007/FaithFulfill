@@ -12,6 +12,8 @@ import proximity from 'rn-proximity-sensor';
 import type { SubscriptionRef } from 'rn-proximity-sensor';
 import FastImage from 'react-native-fast-image'
 
+import { CommonActions } from '@react-navigation/native';
+
 export function PrayScreen({ navigation, route }: { navigation: any, route: any }): React.JSX.Element {
   const [isProximityEnabled, setProximityEnabled] = React.useState<boolean>(false);
   const [proximityCount, setProximityCount] = React.useState<number>(0);
@@ -51,7 +53,14 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
           useNativeDriver: false,
         }
         )
-      ]).start(() => navigation.navigate('FaithFulfill'));
+      ]).start(() => navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [
+            { name: 'FaithFulfill'},
+          ],
+        })
+      ));
     }
   }
 
@@ -123,7 +132,14 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
                 styles.returnHomeButton,
                 homeButtonPressed && styles.pressedButton,
               ]}
-              onPress={() => navigation.navigate('FaithFulfill')}
+              onPress={() => navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [
+                    { name: 'FaithFulfill'},
+                  ],
+                })
+              )}
               onPressIn={homePressIn}
               onPressOut={homePressOut}
             >
