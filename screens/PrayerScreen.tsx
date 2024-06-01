@@ -57,7 +57,7 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
         CommonActions.reset({
           index: 1,
           routes: [
-            { name: 'FaithFulfill'},
+            { name: 'Main'},
           ],
         })
       ));
@@ -136,7 +136,7 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
                 CommonActions.reset({
                   index: 1,
                   routes: [
-                    { name: 'FaithFulfill'},
+                    { name: 'Main'},
                   ],
                 })
               )}

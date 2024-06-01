@@ -11,10 +11,24 @@ import HomeScreen from './screens/HomeScreen';
 import { PrayScreen } from './screens/PrayerScreen';
 import WelcomeCalendarScreen from './screens/WelcomeCalendarScreen';
 import WelcomeRakatScreen from './screens/WelcomeRakatScreen';
+import DailyPrayerScreen from './screens/DailyPrayerScreen';
+import JourneyScreen from './screens/JourneyScreen';
 import { storeData, getItemFor } from './helpers/asyncStorage';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 const FIRST_TIME = 'FIRST_TIME';
+
+function Main() {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarStyle: { backgroundColor: 'rgba(28,28,30,1)'}, tabBarActiveTintColor: 'rgba(255, 204, 0, 1)', tabBarInactiveTintColor: 'white'}} >
+      <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Prayers" component={DailyPrayerScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Journey" component={JourneyScreen} options={{ headerShown: false }}/>
+    </Tab.Navigator>
+  );
+}
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -42,14 +56,14 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-      {isFirstTime && <Stack.Navigator initialRouteName='FaithFulfill' screenOptions={{
+      {isFirstTime && <Stack.Navigator initialRouteName='Main' screenOptions={{
         headerStyle: {
           backgroundColor: 'black',
         },
         headerTintColor: '#000000',
       }}>
-        <Stack.Screen name="FaithFulfill" component={HomeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Pray" component={PrayScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Main" component={Main} options={{ headerShown: false }}/>
       </Stack.Navigator>}
       {!isFirstTime && <Stack.Navigator initialRouteName='WelcomeRakaat' screenOptions={{
         headerStyle: {
@@ -59,7 +73,7 @@ function App(): React.JSX.Element {
       }}>
         <Stack.Screen name="WelcomeRakaat" component={WelcomeRakatScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="WelcomeCalendar" component={WelcomeCalendarScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="FaithFulfill" component={HomeScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Main" component={Main} options={{ headerShown: false }}/>
         <Stack.Screen name="Pray" component={PrayScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>}
     </NavigationContainer>
