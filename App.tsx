@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from './screens/HomeScreen';
 import { PrayScreen } from './screens/PrayerScreen';
-import WelcomeCalendarScreen from './screens/WelcomeCalendarScreen';
+// import WelcomeCalendarScreen from './screens/WelcomeCalendarScreen';
 import WelcomeRakatScreen from './screens/WelcomeRakatScreen';
 import DailyPrayerScreen from './screens/DailyPrayerScreen';
 import JourneyScreen from './screens/JourneyScreen';
@@ -72,7 +72,7 @@ function App(): React.JSX.Element {
         headerTintColor: '#000000',
       }}>
         <Stack.Screen name="WelcomeRakaat" component={WelcomeRakatScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="WelcomeCalendar" component={WelcomeCalendarScreen} options={{ headerShown: false }}/>
+        {/* <Stack.Screen name="WelcomeCalendar" component={WelcomeCalendarScreen} options={{ headerShown: false }}/> */}
         <Stack.Screen name="Main" component={Main} options={{ headerShown: false }}/>
         <Stack.Screen name="Pray" component={PrayScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>}

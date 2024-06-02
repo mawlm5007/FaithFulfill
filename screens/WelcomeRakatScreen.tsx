@@ -25,7 +25,7 @@ export default function WelcomeRakatScreen({ navigation }: { navigation: any }):
                         styles.button,
                         nextButtonPressed && styles.pressedButton,
                     ]}
-                    onPress={() => navigation.navigate('WelcomeCalendar')}
+                    onPress={() => navigation.navigate('Pray', { rakat: 1 })}
                     onPressIn={() => setNextButtonPressed(true)}
                     onPressOut={() => setNextButtonPressed(false)}
                 >

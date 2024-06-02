@@ -20,6 +20,10 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
   const [inPrayer, setInPrayer] = React.useState<boolean>(false);
   const [rakatCount, setRakatCount] = React.useState<number>(0);
   const rakat = route.params?.rakat || 2;
+  const fardhPrayer = route.params?.fardhPrayer;
+  // if (fardhPrayer) {
+  //   console.log('FardhPrayer', fardhPrayer);
+  // }
   const [startButtonPressed, setStartButtonPressed] = React.useState<boolean>(false);
   const [homeButtonPressed, setHomeButtonPressed] = React.useState<boolean>(false);
 

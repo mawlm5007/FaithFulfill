@@ -7,12 +7,50 @@ import {
   Image,
   Pressable,
 } from 'react-native';
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 export default function JourneyScreen({ navigation }: { navigation: any }): React.JSX.Element {
     const [nextButtonPressed, setNextButtonPressed] = React.useState<boolean>(false);
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>JOURNEY SCREEN</Text>
+            <Text style={styles.text}>YOUR JOURNEY</Text>
+            <View style={{height: '40%'}}>
+                <CalendarList 
+                    scrollEnabled={true}
+                    style={{height: '100%'}}
+                    showScrollIndicator={true}
+                    futureScrollRange={1}
+                    pastScrollRange={1000}
+                    theme={{
+                        backgroundColor: 'rgba(28,28,30,1)',
+                        calendarBackground: 'rgba(28,28,30,1)',
+                        textSectionTitleColor: 'rgba(255, 204, 0, 1)',
+                        textSectionTitleDisabledColor: 'rgba(255, 204, 0, 1)',
+                        selectedDayBackgroundColor: 'rgba(255, 204, 0, 1)',
+                        selectedDayTextColor: 'rgba(255, 204, 0, 1)',
+                        todayTextColor: 'rgba(255, 204, 0, 1)',
+                        dayTextColor: 'rgba(255, 204, 0, 1)',
+                        textDisabledColor: '#d9e1e8',
+                        dotColor: 'rgba(255, 204, 0, 1)',
+                        selectedDotColor: 'rgba(255, 204, 0, 1)',
+                        arrowColor: 'orange',
+                        disabledArrowColor: '#d9e1e8',
+                        monthTextColor: 'rgba(255, 204, 0, 1)',
+                        indicatorColor: 'rgba(255, 204, 0, 1)',
+                        textDayFontFamily: 'monospace',
+                        textMonthFontFamily: 'monospace',
+                        textDayHeaderFontFamily: 'monospace',
+                        textDayFontWeight: '300',
+                        textMonthFontWeight: 'bold',
+                        textDayHeaderFontWeight: '300',
+                        textDayFontSize: 16,
+                        textMonthFontSize: 16,
+                        textDayHeaderFontSize: 16
+                    }}
+                >
+                </CalendarList>
+            </View>
+            <Text style={styles.text}>🔥 1 Day Streak</Text>
         </View>
     );
 }
@@ -25,6 +63,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(28,28,30,1)',
     },
     text: {
+        marginTop: 16,
         fontSize: 24,
         fontWeight: 'bold',
         color: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow

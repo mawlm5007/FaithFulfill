@@ -32,8 +32,8 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
         if (rakat === 'isha') setPressedButtonFive(false);
     };
 
-    const handlePress = (rakat: number) => {
-        navigation.navigate('Pray', { rakat: rakat });
+    const handlePress = (rakat: number, fardhPrayer: string) => {
+        navigation.navigate('Pray', { rakat: rakat, fardhPrayer: fardhPrayer });
     };
 
     return (
@@ -44,61 +44,63 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
                 resizeMode={FastImage.resizeMode.contain}
             />
             <Text style={styles.text}>Select Fardh Prayers</Text>
-            <Pressable
-                style={[
-                    styles.button,
-                    pressedButtonOne && styles.pressedButton,
-                ]}
-                onPressIn={handlePressIn.bind(null, 'fajr')}
-                onPressOut={handlePressOut.bind(null, 'fajr')}
-                onPress={handlePress.bind(null, 2)}
-            >
-                <Text style={styles.buttonText}>Fajr</Text>
-            </Pressable>
-            <Pressable
-                style={[
-                    styles.button,
-                    pressedButtonTwo && styles.pressedButton,
-                ]}
-                onPressIn={handlePressIn.bind(null, 'zuhr')}
-                onPressOut={handlePressOut.bind(null, 'zuhr')}
-                onPress={handlePress.bind(null, 4)}
-            >
-                <Text style={styles.buttonText}>Zuhr</Text>
-            </Pressable>
-            <Pressable
-                style={[
-                    styles.button,
-                    pressedButtonThree && styles.pressedButton,
-                ]}
-                onPressIn={handlePressIn.bind(null, 'asr')}
-                onPressOut={handlePressOut.bind(null, 'asr')}
-                onPress={handlePress.bind(null, 4)}
-            >
-                <Text style={styles.buttonText}>Asr</Text>
-            </Pressable>
-            <Pressable
-                style={[
-                    styles.button,
-                    pressedButtonFour && styles.pressedButton,
-                ]}
-                onPressIn={handlePressIn.bind(null, 'maghreb')}
-                onPressOut={handlePressOut.bind(null, 'maghreb')}
-                onPress={handlePress.bind(null, 3)}
-            >
-                <Text style={styles.buttonText}>Maghreb</Text>
-            </Pressable>
-            <Pressable
-                style={[
-                    styles.button,
-                    pressedButtonFive && styles.pressedButton,
-                ]}
-                onPressIn={handlePressIn.bind(null, 'isha')}
-                onPressOut={handlePressOut.bind(null, 'isha')}
-                onPress={handlePress.bind(null, 4)}
-            >
-                <Text style={styles.buttonText}>Isha</Text>
-            </Pressable>
+            <View style={styles.buttonContainer}>
+                <Pressable
+                    style={[
+                        styles.button,
+                        pressedButtonOne && styles.pressedButton,
+                    ]}
+                    onPressIn={handlePressIn.bind(null, 'fajr')}
+                    onPressOut={handlePressOut.bind(null, 'fajr')}
+                    onPress={handlePress.bind(null, 2, 'fajr')}
+                >
+                    <Text style={styles.buttonText}>Fajr</Text>
+                </Pressable>
+                <Pressable
+                    style={[
+                        styles.button,
+                        pressedButtonTwo && styles.pressedButton,
+                    ]}
+                    onPressIn={handlePressIn.bind(null, 'zuhr')}
+                    onPressOut={handlePressOut.bind(null, 'zuhr')}
+                    onPress={handlePress.bind(null, 4, 'zuhr')}
+                >
+                    <Text style={styles.buttonText}>Zuhr</Text>
+                </Pressable>
+                <Pressable
+                    style={[
+                        styles.button,
+                        pressedButtonThree && styles.pressedButton,
+                    ]}
+                    onPressIn={handlePressIn.bind(null, 'asr')}
+                    onPressOut={handlePressOut.bind(null, 'asr')}
+                    onPress={handlePress.bind(null, 4, 'asr')}
+                >
+                    <Text style={styles.buttonText}>Asr</Text>
+                </Pressable>
+                <Pressable
+                    style={[
+                        styles.button,
+                        pressedButtonFour && styles.pressedButton,
+                    ]}
+                    onPressIn={handlePressIn.bind(null, 'maghreb')}
+                    onPressOut={handlePressOut.bind(null, 'maghreb')}
+                    onPress={handlePress.bind(null, 3, 'maghreb')}
+                >
+                    <Text style={styles.buttonText}>Maghreb</Text>
+                </Pressable>
+                <Pressable
+                    style={[
+                        styles.button,
+                        pressedButtonFive && styles.pressedButton,
+                    ]}
+                    onPressIn={handlePressIn.bind(null, 'isha')}
+                    onPressOut={handlePressOut.bind(null, 'isha')}
+                    onPress={handlePress.bind(null, 4, 'isha')}
+                >
+                    <Text style={styles.buttonText}>Isha</Text>
+                </Pressable>
+            </View>
         </View>
     );
 }
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
         marginBottom: 10,
-        width: 300,
+        width: 125,
     },
     pressedButton: {
         backgroundColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
@@ -135,4 +137,14 @@ const styles = StyleSheet.create({
         color: 'rgba(28,28,30,1)', // hex value for a darker shade of yellow
         textAlign: 'center',
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 16,
+        flexWrap: 'wrap',
+        gap: 15,
+        marginHorizontal: 50,
+        textAlign: 'center'
+    }
 });
