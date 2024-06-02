@@ -8,6 +8,8 @@ import {
   Pressable,
 } from 'react-native';
 import FastImage from 'react-native-fast-image'
+import * as Progress from 'react-native-progress';
+import { calulateCompletedPrayers } from '../helpers/dailyPrayer';
 
 export default function DailyPrayerScreen({ navigation }: { navigation: any }): React.JSX.Element {
     const [pressedButtonOne, setPressedButtonOne] = React.useState<boolean>(false);
@@ -15,6 +17,17 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
     const [pressedButtonThree, setPressedButtonThree] = React.useState<boolean>(false);
     const [pressedButtonFour, setPressedButtonFour] = React.useState<boolean>(false);
     const [pressedButtonFive, setPressedButtonFive] = React.useState<boolean>(false);
+
+    const [progress, setProgress] = React.useState<number>(0);
+
+    React.useEffect(() => {
+        // calculate progress bar from prayers completed 
+        const calculatedProgress = async () => {
+            const completedPrayers = await calulateCompletedPrayers();
+            setProgress(completedPrayers/5);
+        };
+        calculatedProgress();
+    }, [progress]);
 
     const handlePressIn = (rakat: string) => {
         if (rakat === 'fajr') setPressedButtonOne(true);
@@ -101,6 +114,7 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
                     <Text style={styles.buttonText}>Isha</Text>
                 </Pressable>
             </View>
+            <Progress.Bar progress={progress} width={200} color='rgba(255, 204, 0, 1)'  />
         </View>
     );
 }
@@ -141,7 +155,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 16,
+        marginBottom: 30,
         flexWrap: 'wrap',
         gap: 15,
         marginHorizontal: 50,
