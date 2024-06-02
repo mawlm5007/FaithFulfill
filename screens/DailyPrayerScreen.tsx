@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image'
 import * as Progress from 'react-native-progress';
-import { calulateCompletedPrayers } from '../helpers/dailyPrayer';
+import { calulateCompletedPrayers, getDailyPrayerStatus } from '../helpers/dailyPrayer';
 
 export default function DailyPrayerScreen({ navigation }: { navigation: any }): React.JSX.Element {
     const [pressedButtonOne, setPressedButtonOne] = React.useState<boolean>(false);
@@ -18,6 +18,12 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
     const [pressedButtonFour, setPressedButtonFour] = React.useState<boolean>(false);
     const [pressedButtonFive, setPressedButtonFive] = React.useState<boolean>(false);
 
+    const [completedFajr, setCompletedFajr] = React.useState<boolean>(false);
+    const [completedZuhr, setCompletedZuhr] = React.useState<boolean>(false);
+    const [completedAsr, setCompletedAsr] = React.useState<boolean>(false);
+    const [completedMaghreb, setCompletedMaghreb] = React.useState<boolean>(false);
+    const [completedIsha, setCompletedIsha] = React.useState<boolean>(false);
+
     const [progress, setProgress] = React.useState<number>(0);
 
     React.useEffect(() => {
@@ -25,6 +31,12 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
         const calculatedProgress = async () => {
             const completedPrayers = await calulateCompletedPrayers();
             setProgress(completedPrayers/5);
+            const dailyPrayerStatus = await getDailyPrayerStatus();
+            setCompletedFajr(dailyPrayerStatus['prayers']['fajr']);
+            setCompletedZuhr(dailyPrayerStatus['prayers']['zuhr']);
+            setCompletedAsr(dailyPrayerStatus['prayers']['asr']);
+            setCompletedMaghreb(dailyPrayerStatus['prayers']['maghreb']);
+            setCompletedIsha(dailyPrayerStatus['prayers']['isha']);
         };
         calculatedProgress();
     }, [progress]);
@@ -67,7 +79,7 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
                     onPressOut={handlePressOut.bind(null, 'fajr')}
                     onPress={handlePress.bind(null, 2, 'fajr')}
                 >
-                    <Text style={styles.buttonText}>Fajr</Text>
+                    {completedFajr ? <Text style={styles.buttonText}>Fajr✅</Text> : <Text style={styles.buttonText}>Fajr</Text>}
                 </Pressable>
                 <Pressable
                     style={[
@@ -78,7 +90,7 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
                     onPressOut={handlePressOut.bind(null, 'zuhr')}
                     onPress={handlePress.bind(null, 4, 'zuhr')}
                 >
-                    <Text style={styles.buttonText}>Zuhr</Text>
+                    {completedZuhr ? <Text style={styles.buttonText}>Zuhr✅</Text> : <Text style={styles.buttonText}>Zuhr</Text>}
                 </Pressable>
                 <Pressable
                     style={[
@@ -89,7 +101,7 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
                     onPressOut={handlePressOut.bind(null, 'asr')}
                     onPress={handlePress.bind(null, 4, 'asr')}
                 >
-                    <Text style={styles.buttonText}>Asr</Text>
+                    {completedAsr ? <Text style={styles.buttonText}>Asr✅</Text> : <Text style={styles.buttonText}>Asr</Text>}
                 </Pressable>
                 <Pressable
                     style={[
@@ -100,7 +112,7 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
                     onPressOut={handlePressOut.bind(null, 'maghreb')}
                     onPress={handlePress.bind(null, 3, 'maghreb')}
                 >
-                    <Text style={styles.buttonText}>Maghreb</Text>
+                    {completedMaghreb ? <Text style={styles.buttonText}>Maghreb✅</Text> : <Text style={styles.buttonText}>Maghreb</Text>}
                 </Pressable>
                 <Pressable
                     style={[
@@ -111,10 +123,10 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
                     onPressOut={handlePressOut.bind(null, 'isha')}
                     onPress={handlePress.bind(null, 4, 'isha')}
                 >
-                    <Text style={styles.buttonText}>Isha</Text>
+                    {completedIsha ? <Text style={styles.buttonText}>Isha✅</Text> : <Text style={styles.buttonText}>Isha</Text>}
                 </Pressable>
             </View>
-            <Progress.Bar progress={progress} width={200} color='rgba(255, 204, 0, 1)'  />
+            <Progress.Bar progress={progress} width={200} color={progress === 1 ? 'rgba(255, 204, 0, 1)' : 'rgba(255, 204, 0, 1)'}  />
         </View>
     );
 }
@@ -139,7 +151,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
         marginBottom: 10,
-        width: 125,
+        width: 138,
     },
     pressedButton: {
         backgroundColor: 'rgba(255, 204, 0, 1)', // hex value for a darker shade of yellow
