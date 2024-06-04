@@ -9,7 +9,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from './screens/HomeScreen';
 import { PrayScreen } from './screens/PrayerScreen';
-// import WelcomeCalendarScreen from './screens/WelcomeCalendarScreen';
 import WelcomeRakatScreen from './screens/WelcomeRakatScreen';
 import DailyPrayerScreen from './screens/DailyPrayerScreen';
 import JourneyScreen from './screens/JourneyScreen';
@@ -22,7 +21,7 @@ const FIRST_TIME = 'FIRST_TIME';
 
 function Main() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false, tabBarStyle: { backgroundColor: 'rgba(28,28,30,1)'}, tabBarActiveTintColor: 'rgba(255, 204, 0, 1)', tabBarInactiveTintColor: 'white'}} >
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarStyle: { backgroundColor: 'rgba(28,28,30,1)'}, tabBarActiveTintColor: 'rgba(255, 204, 0, 1)', tabBarInactiveTintColor: 'white', unmountOnBlur: true}} >
       <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
       <Tab.Screen name="Prayers" component={DailyPrayerScreen} options={{ headerShown: false }}/>
       <Tab.Screen name="Journey" component={JourneyScreen} options={{ headerShown: false }}/>

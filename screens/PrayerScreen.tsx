@@ -13,7 +13,8 @@ import type { SubscriptionRef } from 'rn-proximity-sensor';
 import FastImage from 'react-native-fast-image'
 
 import { CommonActions } from '@react-navigation/native';
-import { setDailyPrayerStatus } from '../helpers/dailyPrayer';
+import { calulateCompletedPrayers, setDailyPrayerStatus } from '../helpers/dailyPrayer';
+import { addPrayer } from '../helpers/monthPrayers';
 
 export function PrayScreen({ navigation, route }: { navigation: any, route: any }): React.JSX.Element {
   const [isProximityEnabled, setProximityEnabled] = React.useState<boolean>(false);
@@ -107,7 +108,13 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
   return (
         <Animated.View style={styles.container} onTouchStart={async () => {
             if (rakatCount === rakat) {
-              if (fardhPrayer) await setDailyPrayerStatus(fardhPrayer);
+              if (fardhPrayer) {
+                const completedPrayers = await calulateCompletedPrayers();
+                if (completedPrayers === 4) {
+                  await addPrayer();
+                }
+                await setDailyPrayerStatus(fardhPrayer);
+              }
               // add animation here: all circles grow to fill the whole screen 
               shrinkCircles();
               // navigate to next page

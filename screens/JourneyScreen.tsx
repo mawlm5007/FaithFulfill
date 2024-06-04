@@ -8,9 +8,46 @@ import {
   Pressable,
 } from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import { calculateStreaks, getAllPrayers } from '../helpers/monthPrayers';
+import { MarkedDates } from 'react-native-calendars/src/types';
 
 export default function JourneyScreen({ navigation }: { navigation: any }): React.JSX.Element {
-    const [nextButtonPressed, setNextButtonPressed] = React.useState<boolean>(false);
+    // const [markedDates, setMarkedDates] = React.useState({
+    //     '2024-06-20': {textColor: 'green'},
+    //     '2024-06-22': {startingDay: true, color: 'green'},
+    //     '2024-06-23': {selected: true, endingDay: true, color: 'green', textColor: 'gray'},
+    //     '2024-06-04': {disabled: true, startingDay: true, color: 'green', endingDay: true}
+    //   });
+
+    const [markedDates, setMarkedDates] = React.useState<MarkedDates>({});
+
+    const [streaks, setStreaks] = React.useState(0);
+
+    const calculateMarkedDates = async () => {
+        const newMarkedDates = await getAllPrayers();
+        console.log('newMarkedDates', newMarkedDates);
+        console.log('markedDates', markedDates);
+        if (JSON.stringify(newMarkedDates) !== JSON.stringify(markedDates)) {
+            console.log('setting marked dates')
+            setMarkedDates(newMarkedDates);
+        }
+    }
+
+    const streaksCalculation = async () => {
+        const newStreaks = await calculateStreaks();
+        console.log('newStreaks', newStreaks);
+        console.log('streaks', streaks);
+        if (newStreaks !== streaks) {
+            console.log('setting streaks')
+            setStreaks(newStreaks);
+        }
+    }
+
+
+    React.useEffect(() => {
+        calculateMarkedDates();
+        streaksCalculation();
+    }, [streaks, markedDates])
     return (
         <View style={styles.container}>
             <Text style={styles.text}>YOUR JOURNEY</Text>
@@ -19,8 +56,10 @@ export default function JourneyScreen({ navigation }: { navigation: any }): Reac
                     scrollEnabled={true}
                     style={{height: '100%'}}
                     showScrollIndicator={true}
-                    futureScrollRange={1}
+                    futureScrollRange={0}
                     pastScrollRange={1000}
+                    markedDates={markedDates as MarkedDates}
+                    markingType={'period'}
                     theme={{
                         backgroundColor: 'rgba(28,28,30,1)',
                         calendarBackground: 'rgba(28,28,30,1)',
@@ -45,12 +84,12 @@ export default function JourneyScreen({ navigation }: { navigation: any }): Reac
                         textDayHeaderFontWeight: '300',
                         textDayFontSize: 16,
                         textMonthFontSize: 16,
-                        textDayHeaderFontSize: 16
+                        textDayHeaderFontSize: 16,
                     }}
                 >
                 </CalendarList>
             </View>
-            <Text style={styles.text}>🔥 1 Day Streak</Text>
+            { streaks > 0 && <Text style={styles.text}>🔥 {streaks} Day Streak</Text>}
         </View>
     );
 }
