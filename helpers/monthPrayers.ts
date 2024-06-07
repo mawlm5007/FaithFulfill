@@ -1,7 +1,7 @@
 import { getObjectFor, storeObject } from "./asyncStorage";
 
 export const addPrayer = async () => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toLocaleDateString();
     console.log('today: ', today);
     const newPrayer = {
         date: [today]
