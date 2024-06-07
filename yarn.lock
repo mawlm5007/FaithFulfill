@@ -1946,6 +1946,11 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@sayem314/react-native-keep-awake@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/@sayem314/react-native-keep-awake/-/react-native-keep-awake-1.2.3.tgz"
+  integrity sha512-Vk/1cYfEiZpKUKDH1c4NzRwSROcIRGjH/QY0/AnDoYTY01LJiqn9h7xKmLl7VtZlvgTkhcWwISpFSPYDU5TfwA==
+
 "@sideway/address@^4.1.5":
   version "4.1.5"
   resolved "https://registry.npmjs.org/@sideway/address/-/address-4.1.5.tgz"

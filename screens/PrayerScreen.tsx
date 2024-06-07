@@ -11,12 +11,14 @@ import {
 import proximity from 'rn-proximity-sensor';
 import type { SubscriptionRef } from 'rn-proximity-sensor';
 import FastImage from 'react-native-fast-image'
+import { useKeepAwake } from '@sayem314/react-native-keep-awake';
 
 import { CommonActions } from '@react-navigation/native';
 import { calulateCompletedPrayers, setDailyPrayerStatus } from '../helpers/dailyPrayer';
 import { addPrayer } from '../helpers/monthPrayers';
 
 export function PrayScreen({ navigation, route }: { navigation: any, route: any }): React.JSX.Element {
+  useKeepAwake();
   const [isProximityEnabled, setProximityEnabled] = React.useState<boolean>(false);
   const [proximityCount, setProximityCount] = React.useState<number>(0);
   const [inPrayer, setInPrayer] = React.useState<boolean>(false);
