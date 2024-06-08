@@ -90,7 +90,7 @@ export default function DailyPrayerScreen({ navigation }: { navigation: any }): 
                     onPressOut={handlePressOut.bind(null, 'zuhr')}
                     onPress={handlePress.bind(null, 4, 'zuhr')}
                 >
-                    {completedZuhr ? <Text style={styles.buttonText}>Zuhr✅</Text> : <Text style={styles.buttonText}>Zuhr</Text>}
+                    {completedZuhr ? <Text style={styles.buttonText}>Dhuhr✅</Text> : <Text style={styles.buttonText}>Dhuhr</Text>}
                 </Pressable>
                 <Pressable
                     style={[
