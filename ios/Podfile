@@ -22,6 +22,9 @@ target 'FaithFulfill' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+  
+  # Add your native module here
+  pod 'rn-proximity-sensor', :path => '/Users/maahirmawla/Desktop/Projects/FaithFulfill/helpers/rn-proximity-sensor'
 
   target 'FaithFulfillTests' do
     inherit! :complete

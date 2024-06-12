@@ -48,7 +48,7 @@ export const calculateStreaks = async (): Promise<number> => {
 
     let count = 0;
     prayerObj.reverse().forEach((el: any, i: any) => {
-        if ((new Date().setHours(0,0,0,0) - new Date(el.date).setHours(0,0,0,0)) === i * 86400000) count++
+        if ((new Date().setUTCHours(0,0,0,0) - new Date(el.date).setUTCHours(0,0,0,0)) === i * 86400000) count++
     })
     console.log('count: ', count);
     return count

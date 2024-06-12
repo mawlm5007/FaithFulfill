@@ -76,6 +76,7 @@ export function PrayScreen({ navigation, route }: { navigation: any, route: any 
     if (!inPrayer) return;
 
     sensorSubscriptionRef.current = proximity.subscribe((values) => {
+      
       if (values.is_double_toggle) {
         setProximityEnabled(true);
         setProximityCount((prevCount) => {

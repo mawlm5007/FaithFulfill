@@ -1295,7 +1295,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - rn-proximity-sensor (from `../node_modules/rn-proximity-sensor`)
+  - rn-proximity-sensor (from `/Users/maahirmawla/Desktop/Projects/FaithFulfill/helpers/rn-proximity-sensor`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1421,7 +1421,7 @@ EXTERNAL SOURCES:
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
   rn-proximity-sensor:
-    :path: "../node_modules/rn-proximity-sensor"
+    :path: "/Users/maahirmawla/Desktop/Projects/FaithFulfill/helpers/rn-proximity-sensor"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNFastImage:
@@ -1497,6 +1497,6 @@ SPEC CHECKSUMS:
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: 56f906bf6c11c931588191dde1229fd3e4e3d557
 
-PODFILE CHECKSUM: c31287e959642330f20003f46bab0434c8344f5d
+PODFILE CHECKSUM: 981cae26bf23161cdfa2f7275945ea33b111473b
 
 COCOAPODS: 1.14.3
