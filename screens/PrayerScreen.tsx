@@ -8,8 +8,8 @@ import {
   Animated,
   Image,
 } from 'react-native';
-import proximity from '../helpers/rn-proximity-sensor';
-import type { SubscriptionRef } from '../helpers/rn-proximity-sensor';
+import proximity from 'rn-proximity-sensor';
+import type { SubscriptionRef } from 'rn-proximity-sensor';
 import FastImage from 'react-native-fast-image'
 import { useKeepAwake } from '@sayem314/react-native-keep-awake';
 
